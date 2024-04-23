@@ -4,12 +4,12 @@ import { useRef } from 'react'
 import { Slider } from './Slider'
 
 
-export const Play = () => (
-    <svg  role="img" height="16" width="16" aria-hidden="true" viewBox="0 0 16 16"><path d="M3 1.713a.7.7 0 0 1 1.05-.607l10.89 6.288a.7.7 0 0 1 0 1.212L4.05 14.894A.7.7 0 0 1 3 14.288V1.713z"></path></svg>
+export const Play = ({className}) => (
+    <svg  className={className} role="img" height="16" width="16" aria-hidden="true" viewBox="0 0 16 16"><path d="M3 1.713a.7.7 0 0 1 1.05-.607l10.89 6.288a.7.7 0 0 1 0 1.212L4.05 14.894A.7.7 0 0 1 3 14.288V1.713z"></path></svg>
 )
 
-export const Pause = () => (
-    <svg  role="img" height="16" width="16" aria-hidden="true" viewBox="0 0 16 16"><path d="M2.7 1a.7.7 0 0 0-.7.7v12.6a.7.7 0 0 0 .7.7h2.6a.7.7 0 0 0 .7-.7V1.7a.7.7 0 0 0-.7-.7H2.7zm8 0a.7.7 0 0 0-.7.7v12.6a.7.7 0 0 0 .7.7h2.6a.7.7 0 0 0 .7-.7V1.7a.7.7 0 0 0-.7-.7h-2.6z"></path></svg>
+export const Pause = ({className}) => (
+    <svg className={className}  role="img" height="16" width="16" aria-hidden="true" viewBox="0 0 16 16"><path d="M2.7 1a.7.7 0 0 0-.7.7v12.6a.7.7 0 0 0 .7.7h2.6a.7.7 0 0 0 .7-.7V1.7a.7.7 0 0 0-.7-.7H2.7zm8 0a.7.7 0 0 0-.7.7v12.6a.7.7 0 0 0 .7.7h2.6a.7.7 0 0 0 .7-.7V1.7a.7.7 0 0 0-.7-.7h-2.6z"></path></svg>
 )
 
 export const Volume = () =>(
@@ -62,13 +62,15 @@ const SongControl = ({audio}) =>{
     const duration = audio?.current?.duration ?? 0
     return (
         <div className='flex gap-x-3 text-xs pt-2'>
-            <span className='opacity-50'>{formatTime(currentTime)}</span>
-            <Slider defaultValue={[0]}  value={[currentTime]} max={audio?.current?.duration ?? 0} min={0} className='w-[500px]'
+            <span className='opacity-50 w-12 text-right'>{formatTime(currentTime)}</span>
+            <Slider defaultValue={[0]}  value={[currentTime]} max={audio?.current?.duration ?? 0} min={0} className='w-[400px]'
             onValueChange={(value) =>{ 
                 const [newTime]= value
                 audio.current.currentTime = newTime
             }}/>
-            <span className='opacity-50'>{formatTime(duration)}</span>
+           <span className='opacity-50 w-12'>
+            {duration ? formatTime(duration) : null}
+            </span>
         </div>
     )
 }
@@ -137,9 +139,9 @@ export function Player (){
         setIsPlaying(!isPlaying)
     }
     return(
-        <div className="flex flex-row justify-between w-full px-4 z-50">
-            <div>
-                <CurrentSong{...currentMusic.song}/>
+        <div className="flex flex-row justify-between w-full px-1 z-50">
+            <div className='w-[350px]'>
+                <CurrentSong {...currentMusic.song}/>
             </div>
             <div className="grid place-content-center gap-4 flex-1">
                 <div className="flex justify-center flex-col items-center">
